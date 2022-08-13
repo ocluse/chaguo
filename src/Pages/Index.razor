@@ -1,0 +1,194 @@
+﻿@page "/"
+@inject DataService Data;
+@implements ITotalProvider;
+
+<PageTitle>Uchaguzi 2022</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Presidential Elections 2022</MudText>
+<MudGrid>
+    @foreach (Candidate candidate in _candidates)
+    {
+        <MudItem xs="12" sm="6" md="3">
+            <div class="d-flex flex-grow-1 gap-4">
+                <MudAvatar Size="Size.Large" Image="@($"images/avatars/{candidate.ImageSource}.png")" />
+                <div>
+                    <MudText Typo="Typo.h6">@candidate.FirstName</MudText>
+                    <MudText Typo="Typo.h6">@candidate.LastName</MudText>
+                </div>
+            </div>
+            <MudText>@candidate.Party</MudText>
+            <MudProgressLinear Color="@candidate.Color" Size="Size.Medium" Value="@candidate.Percent" Maximum="1" />
+            <MudText Typo="Typo.h6">@candidate.Percent.ToString("P2")</MudText>
+            <MudText Typo="Typo.caption">@(candidate.TotalVotes.ToString("N0"))</MudText>
+        </MudItem>
+    }
+    @*<MudItem xs="3">
+    <div class="d-flex flex-grow-1 gap-4">
+    <MudAvatar Size="Size.Large" Image="images/avatars/raila.png" />
+    <div>
+    <MudText Typo="Typo.h6">Raila</MudText>
+    <MudText Typo="Typo.h6">Odinga</MudText>
+
+    </div>
+    </div>
+    <MudText>Azimio</MudText>
+    <MudProgressLinear Color="Color.Info" Size="Size.Medium" Value="75" />
+    <MudText Typo="Typo.h6">74.5%</MudText>
+    </MudItem>
+    <MudItem xs="3">
+    <div class="d-flex flex-grow-1 gap-4">
+    <MudAvatar Size="Size.Large" Image="images/avatars/ruto.png" />
+    <div>
+    <MudText Typo="Typo.h5">Wiliam</MudText>
+    <MudText Typo="Typo.h6">Ruto</MudText>
+
+    </div>
+    </div>
+    <MudText>Kenya Kwanza</MudText>
+    <MudProgressLinear Color="Color.Warning" Size="Size.Medium" Value="75" />
+    <MudText Typo="Typo.h6">74.5%</MudText>
+    </MudItem>
+    <MudItem xs="3">
+    <div class="d-flex flex-grow-1 gap-4">
+    <MudAvatar Size="Size.Large" Image="images/avatars/george.png" />
+    <div>
+    <MudText Typo="Typo.h5">George </MudText>
+    <MudText Typo="Typo.h6">Wajackoyah</MudText>
+
+    </div>
+    </div>
+    <MudText>Roots</MudText>
+    <MudProgressLinear Color="Color.Success" Size="Size.Medium" Value="75" />
+    <MudText Typo="Typo.h6">74.5%</MudText>
+    </MudItem>
+    <MudItem xs="3">
+    <div class="d-flex flex-grow-1 gap-4">
+    <MudAvatar Size="Size.Large" Image="images/avatars/david.png" />
+    <div>
+    <MudText Typo="Typo.h5">David </MudText>
+    <MudText Typo="Typo.h6">Waihiga</MudText>
+
+    </div>
+    </div>
+    <MudText>Agano</MudText>
+    <MudProgressLinear Color="Color.Primary" Size="Size.Medium" Value="75" />
+    <MudText Typo="Typo.h6">74.5%</MudText>
+    </MudItem>*@
+</MudGrid>
+<MudGrid>
+    <MudItem xs="12" md="6">
+        <MudCard>
+            <div style="padding:20px">
+                <div style="padding-bottom:30px">
+                    <MudText Typo="Typo.caption">Updated</MudText>
+                    <MudText Typo="Typo.h6"><BlazorTime.ToLocal DateTime="_refershTime" Format="ddd mmm dd yyyy HH:MM"></BlazorTime.ToLocal></MudText>
+                </div>
+                <div class="d-flex flex-grow-1 gap-4">
+                    <MudProgressCircular Size="Size.Large" Value="_stationsPercent" Maximum="1" Color="Color.Success"></MudProgressCircular>
+                    <div>
+                        <MudText Typo="Typo.caption">Constituencies</MudText>
+                        <MudText Typo="Typo.h6">@_stationsPercent.ToString("P2")</MudText>
+                        <MudText Typo="Typo.subtitle1">@($"{_polledStations}/{_totalStations}")</MudText>
+                    </div>
+
+                </div>
+                <div style="padding-top:20px" class="d-flex flex-grow-1 gap-4">
+                     <div>
+                    <MudText Typo="Typo.caption">Rejected</MudText>
+                    <MudText Typo="Typo.h6">@_rejectedPercent.ToString("P2")</MudText>
+                    <MudText Typo="Typo.subtitle1">@_rejectVotes.ToString("N0")</MudText>
+                </div>
+                <div style="padding-left:40px">
+                    <MudText Typo="Typo.caption">Total</MudText>
+                    <MudText Typo="Typo.h6">@_totalVotes.ToString("N0")</MudText>
+                </div>
+                </div>
+               
+            </div>
+
+        </MudCard>
+    </MudItem>
+
+</MudGrid>
+<MudGrid>
+    <MudItem xs="12" md="6">
+        <MudCard>
+            <div style="padding:20px">
+                <MudText Typo="Typo.h6">Hey, Soo...</MudText>
+                <div class="d-flex flex-grow-1 gap-4">
+                    <MudImage Height="100" Width="100" Class="rounded-lg ma-4" Src="images/alox-poker-logo.png" Elevation="25" />
+                    <div>
+                        <MudText Typo="Typo.subtitle1">While you wait for your #TheFifth to Fifth, you can play our kadi game, Alox Poker. Some doctors probably recommend it to reduce stress :)</MudText>
+                        <div class="d-flex flex-grow-1 gap-4">
+                            <MudIconButton Icon="@Icons.Material.Filled.Android" Link="https://play.google.com/store/apps/details?id=com.ocluse.alox.poker" Target="_blank" Color="Color.Success" />
+                            <MudIconButton Icon="@Icons.Custom.Brands.MicrosoftWindows" Link="https://ocluse.itch.io/alox-poker" Target="_blank" Color="Color.Info" />
+                            <MudIconButton Icon="@Icons.Custom.Brands.Linux" Link="https://ocluse.itch.io/alox-poker" Target="_blank" Color="Color.Warning" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" md="6">
+
+    </MudItem>
+</MudGrid>
+@code {
+    private int _totalVotes;
+    List<Candidate> _candidates = new();
+    public int TotalVotes => _totalVotes;
+
+    private double _rejectedPercent, _stationsPercent;
+    private int _rejectVotes;
+    private int _totalStations = 291;
+    private int _polledStations;
+    private DateTime _refershTime;
+    protected override void OnInitialized()
+    {
+        RunRefreshLoop();
+    }
+
+    private async void RunRefreshLoop()
+    {
+        while (true)
+        {
+
+            IEnumerable<Constituency> constituencies = await Data.LoadDataAsync();
+
+            int rutoSum = constituencies.Sum(x => x.Ruto);
+            int railaSum = constituencies.Sum(x => x.Raila);
+            int georgeSum = constituencies.Sum(x => x.Wajackoyah);
+            int mwaureSum = constituencies.Sum(x => x.Mwaure);
+            _rejectVotes = constituencies.Sum(x => x.Rejected);
+
+            _totalVotes = rutoSum + railaSum + georgeSum + mwaureSum + _rejectVotes;
+
+            _rejectedPercent = (double)_rejectVotes / _totalVotes;
+
+            _candidates.Clear();
+            StateHasChanged();
+
+            Candidate ruto = new("William", "Ruto", "UDA", rutoSum, this, Color.Warning, "ruto");
+            _candidates.Add(ruto);
+            Candidate raila = new("Raila", "Odinga", "Azimio", railaSum, this, Color.Info, "raila");
+            _candidates.Add(raila);
+            Candidate george = new("George", "Wajackoyah", "Roots Party", georgeSum, this, Color.Success, "george");
+            _candidates.Add(george);
+            Candidate mwaure = new("David", "Waihiga", "Agano", mwaureSum, this, Color.Primary, "david");
+            _candidates.Add(mwaure);
+
+            _candidates = _candidates.OrderByDescending(x => x.Percent).ToList();
+
+            _polledStations = 0;
+            foreach (var station in constituencies)
+            {
+                _polledStations += station.Polled ? 1 : 0;
+            }
+
+            _stationsPercent = (double)_polledStations / _totalStations;
+            _refershTime = DateTime.UtcNow;
+            StateHasChanged();
+            await Task.Delay(600000);
+        }
+    }
+}
